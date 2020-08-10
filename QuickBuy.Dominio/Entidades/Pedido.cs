@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace QuickBuy.Dominio.Entidades
 {
-   public class Pedido
+   public class Pedido:Entidade
     {
         public int Id { get; set; }
 
@@ -19,8 +20,7 @@ namespace QuickBuy.Dominio.Entidades
         public string CEP { get; set; }
         public string Estado { get; set; }
 
-        public string 
-           Cidade{ get; set; }
+        public string Cidade { get; set; }
 
         public int EnderecoCompleto { get; set; }
 
@@ -28,6 +28,18 @@ namespace QuickBuy.Dominio.Entidades
 
         public FormaPagamento FormaPagamento { get; set; }
 
+        public override void Validate()
+        {
+            LimparMensagemValidacao();
 
+            if (!ItensPedido.Any())
+
+                AdicionarCritica("Crítica - Pedido não pode ficarz sem item de pedido");
+         
+
+            if (string.IsNullOrEmpty(CEP))
+                AdicionarCritica("Crítica - CEP deve esta preenchido");
+
+        }
     }
 }
